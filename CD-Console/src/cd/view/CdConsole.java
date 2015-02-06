@@ -1,17 +1,17 @@
 package cd.view;
 import java.util.Scanner;
 
-import cd.domain.model.Cd;
-
+import cd.controller.Controller;
+import cd.domain.model.*;
 public class CdConsole implements CdView
 {
    private Scanner in;
-   private CdList cdList;
+   private Controller controller;
 
    public CdConsole()
    {
       in = new Scanner(System.in);
-      cdList = null;
+      controller = null;
    }
 
    @Override
@@ -45,9 +45,9 @@ public class CdConsole implements CdView
    }
 
    @Override
-   public void start(CdList cdList)
+   public void start(Controller controller)
    {
-      this.cdList = cdList;
+      this.controller = controller;
       int menuSelection;
       do
       {
@@ -55,7 +55,7 @@ public class CdConsole implements CdView
          switch (menuSelection)
          {
             case 1:
-               show("" + this.cdList);
+               show("" + this.controller);
                break;
             case 2:
                show("Add method - not implemented");
@@ -81,7 +81,7 @@ public class CdConsole implements CdView
                if (input == null)
                   return;
                msg = "";
-               CdList list = cdList.getCdsByTitle(input);
+               Controller list = cdList.getCdsByTitle(input);
                for (int i = 0; i < list.getNumberOfCds(); i++)
                {
                   msg += list.getCD(i) + "\n";
@@ -105,5 +105,9 @@ public class CdConsole implements CdView
       while (menuSelection != 5);
 
    }
+
+
+
+
 
 }

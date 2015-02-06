@@ -11,8 +11,7 @@ public class Main
    {
       try
       {
-         CdPersistence storage = new CdTextFile("src/cds.txt");
-         CdList cdList = storage.load();
+        
 
          CdView view = new CdConsole();
          view.start(cdList);
