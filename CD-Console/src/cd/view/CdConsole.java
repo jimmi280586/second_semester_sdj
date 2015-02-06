@@ -1,4 +1,7 @@
+package cd.view;
 import java.util.Scanner;
+
+import cd.domain.model.Cd;
 
 public class CdConsole implements CdView
 {

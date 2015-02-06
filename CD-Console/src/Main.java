@@ -2,6 +2,9 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import cd.domain.mediator.CdTextFile;
+import cd.view.CdConsole;
+
 public class Main
 {
    public static void main(String args[])

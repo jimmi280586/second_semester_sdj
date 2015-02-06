@@ -1,4 +1,7 @@
+package cd.domain.mediator;
+
 import java.io.IOException;
+import cd.domain.model.*;
 
 public interface CdPersistence
 {

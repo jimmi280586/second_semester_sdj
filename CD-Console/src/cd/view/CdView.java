@@ -1,3 +1,5 @@
+package cd.view;
+
 public interface CdView
 {
    void start(CdList cdList);
