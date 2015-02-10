@@ -2,7 +2,9 @@ package cd.view;
 import java.util.Scanner;
 
 import cd.controller.Controller;
-import cd.domain.model.*;
+import cd.domain.model.Cd;
+import cd.domain.model.CdList;
+
 public class CdConsole implements CdView
 {
    private Scanner in;
@@ -47,62 +49,36 @@ public class CdConsole implements CdView
    @Override
    public void start(Controller controller)
    {
-      this.controller = controller;
-      int menuSelection;
-      do
-      {
-         menuSelection = menu();
-         switch (menuSelection)
-         {
-            case 1:
-               show("" + this.controller);
-               break;
-            case 2:
-               show("Add method - not implemented");
-               break;
-            case 3:
-               String input = get("Title");
-               if (input.length() == 0)
-                  return;
-               String msg = "";
-               Cd cd = cdList.removeFirstCdByTitle(input);
-               if (cd != null)
-               {
-                  msg = "REMOVED: \n" + cd.toString();
-               }
-               else
-               {
-                  msg = "No CD with title: \"" + input + "\" found";
-               }
-               show(msg);
-               break;
-            case 4:
-               input = get("Title");
-               if (input == null)
-                  return;
-               msg = "";
-               Controller list = cdList.getCdsByTitle(input);
-               for (int i = 0; i < list.getNumberOfCds(); i++)
-               {
-                  msg += list.getCD(i) + "\n";
-               }
-               if (list.getNumberOfCds() == 0)
-               {
-                  msg = "No CD with title: \"" + input + "\" found";
-               }
-               show(msg);
-               break;
-            case 5:
-               System.out.println("Quit");
-               break;
-            default:
-               show("Wrong input");
-               break;
-         }
-         System.out.println("\nPress ENTER to continue...");
-         in.nextLine();
-      }
-      while (menuSelection != 5);
+	   this.controller = controller;
+	   int menuSelection;
+	   do
+	   {
+	   menuSelection = menu();
+	   switch (menuSelection)
+	   {
+	   case 1:
+	   controller.execute("List");
+	   break;
+	   case 2:
+	   controller.execute("Add");
+	   break;
+	   case 3:
+	   controller.execute("Remove");
+	   break;
+	   case 4:
+	   controller.execute("Search");
+	   break;
+	   case 5:
+	   controller.execute("Quit");
+	   break;
+	   default:
+	   show("Wrong input");
+	   break;
+	   }
+	   System.out.println("\nPress ENTER to continue...");
+	   in.nextLine();
+	   }
+	   while (menuSelection != 5);
 
    }
 

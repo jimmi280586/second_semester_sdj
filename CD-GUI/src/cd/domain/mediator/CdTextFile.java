@@ -1,9 +1,14 @@
+package cd.domain.mediator;
+import cd.domain.model.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
+import cd.domain.model.Cd;
 
 public class CdTextFile implements CdPersistence
 {
