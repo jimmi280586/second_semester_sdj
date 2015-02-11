@@ -56,29 +56,29 @@ public class CdConsole implements CdView
 	   menuSelection = menu();
 	   switch (menuSelection)
 	   {
-	   case 1:
-	   controller.execute("List");
-	   break;
-	   case 2:
-	   controller.execute("Add");
-	   break;
-	   case 3:
-	   controller.execute("Remove");
-	   break;
-	   case 4:
-	   controller.execute("Search");
-	   break;
-	   case 5:
-	   controller.execute("Quit");
-	   break;
-	   default:
-	   show("Wrong input");
-	   break;
+	   	case 1:
+	   		controller.execute("List");
+	   		break;
+	   	case 2:
+	   		controller.execute("Add");
+	   		break;
+	   	case 3:
+	   		controller.execute("Remove");
+	   		break;
+	   	case 4:
+	   		controller.execute("Search");
+	   		break;
+	   	case 5:
+		   controller.execute("Quit");
+		   break;
+	   	default:
+	   		show("Wrong input");
+	   		break;
 	   }
-	   System.out.println("\nPress ENTER to continue...");
-	   in.nextLine();
+	   	System.out.println("\nPress ENTER to continue...");
+	   	in.nextLine();
 	   }
-	   while (menuSelection != 5);
+	   	while (menuSelection != 5);
 
    }
 

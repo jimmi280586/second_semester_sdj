@@ -11,16 +11,16 @@ public class Main
 {
    public static void main(String args[])
    {
-	   try
+	   	try
 	   {
-	   CdModel model = new CdModelManager();
-	   CdView view = new CdGUI();
-	   Controller controller = new Controller(model, view);
-	   view.start(controller);
+		   CdModel model = new CdModelManager();
+		   CdView view = new CdGUI();
+		   Controller controller = new Controller(model, view);
+		   view.start(controller);
 	   }
-	   catch (Exception e)
+	   	catch (Exception e)
 	   {
-	   e.printStackTrace();
+	   		e.printStackTrace();
 	   }
    }
 }
