@@ -15,9 +15,9 @@ public class Controller
 			this.view = view;
 		}
 		
-		public void execute(String what)
+		public void execute(String input1)
 		{
-			switch (what)
+			switch (input1)
 			{
 			case "List":
 				this.view.show("" + this.model.getAll());
@@ -29,33 +29,33 @@ public class Controller
 				String input = this.view.get("title");
 				if (input == null)
 					return;
-				String msg = "";
+				String message = "";
 				Cd cd = this.model.removeCD(input);
 				if (cd != null)
 				{
-					msg = "REMOVED: \n" + cd.toString();
+					message = "REMOVED: \n" + cd.toString();
 				}
 				else
 				{
-					msg = "No CD with title: \"" + input + "\" found";
+					message = "No CD with title: \"" + input + "\" found";
 				}
-				this.view.show(msg);
+				this.view.show(message);
 				break;
 			case "Search":
 				String searchInput = this.view.get("title");
 				if (searchInput == null)
 					return;
-				String searchMsg = "";
+				String searchMessage = "";
 				CdList list = this.model.getCD(searchInput);
 				for (int i = 0; i < list.getNumberOfCds(); i++)
 				{
-					searchMsg += list.getCD(i) + "\n";
+					searchMessage += list.getCD(i) + "\n";
 				}
 				if (list.getNumberOfCds() == 0)
 				{
-					searchMsg = "No CD with title: \"" + searchInput + "\" found";
+					searchMessage = "No CD with title: \"" + searchInput + "\" found";
 				}
-				this.view.show(searchMsg);
+				this.view.show(searchMessage);
 				break;
 			case "Quit":
 				System.out.println("Quit");

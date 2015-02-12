@@ -29,8 +29,8 @@ import cd.domain.model.CdList;
 			else if (((JButton) e.getSource()).getText().startsWith("Add"))
 			{
 				this.controller.execute("Add");
-				String msg = "Add method - not implemented";
-				gui.show(msg);
+				String message = "Add method - not implemented";
+				gui.show(message);
 			}
 			else if (((JButton) e.getSource()).getText().startsWith("Remove"))
 			{
