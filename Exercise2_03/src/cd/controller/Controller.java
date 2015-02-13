@@ -17,21 +17,22 @@ public class Controller
 	private MyCdPile model;
 	private CdView view;
 	
-	public Controller(MyCdPile model, CdView view)
+	public Controller( CdView view)
 	{
-		this.model = model;
+		
 		this.view = view;
 	}
 
 	public void execute(String what)
 	{
-		Cd element = createElement();
+		
 			
 		switch (what)
 		{
 			case "Add":
-				this.model.push(element);
-				this.view.show("" + element.toString());
+				
+				this.model.push(createElement());
+				this.view.show("element created");
 				break;
 			case "Title":
 				this.view.show("" + this.model.peek().getTitle());
@@ -80,7 +81,7 @@ public class Controller
 		int count = 0;
 		String title = null;
 		String artist = null;
-		CdTrack[] track = null;
+		
 		
 		System.out.println("please input cd title");
 		title = input.nextLine().toUpperCase();
@@ -89,7 +90,8 @@ public class Controller
 		System.out.println("please input number of tracks");
 		number = input.nextInt();
 		title = input.nextLine(); 
-		while(count <= number)
+		CdTrack[] track = new CdTrack[number];
+		while(count < number)
 		{
 			System.out.println("please input track title");
 			title = input.nextLine().toUpperCase();

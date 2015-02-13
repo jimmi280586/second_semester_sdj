@@ -17,7 +17,7 @@ public class MyCdPile implements StackADT<Cd>
 		{
 			MyCdPile model = new MyCdPile();
 			CdView view = new CdConsole();
-			Controller controller = new Controller(model, view);
+			Controller controller = new Controller(view);
 			view.start(controller);
 		}
 		catch (Exception e)
