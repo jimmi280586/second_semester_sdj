@@ -1,6 +1,9 @@
 package cd;
 
+import cd.controller.Controller;
 import cd.domain.model.Cd;
+import cd.view.CdConsole;
+import cd.view.CdView;
 import utillity.collection.ArrayStack;
 import utillity.collection.StackADT;
 
@@ -10,7 +13,17 @@ public class MyCdPile implements StackADT<Cd>
 	
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
+		try
+		{
+			MyCdPile model = new MyCdPile();
+			CdView view = new CdConsole();
+			Controller controller = new Controller(model, view);
+			view.start(controller);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 	}
 

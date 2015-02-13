@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import cd.MyCdPile;
 import cd.domain.model.Cd;
+import cd.domain.model.CdTrack;
+import cd.domain.model.Time;
 import cd.view.CdView;
 
 
@@ -23,11 +25,13 @@ public class Controller
 
 	public void execute(String what)
 	{
+		Cd element = createElement();
 			
 		switch (what)
 		{
 			case "Add":
-				this.view.show("" + this.model.push(element));
+				this.model.push(element);
+				this.view.show("" + element.toString());
 				break;
 			case "Title":
 				this.view.show("" + this.model.peek().getTitle());
@@ -51,7 +55,7 @@ public class Controller
 				break;
 			case "PopNr":
 				System.out.println("input title");
-				int result;
+				int result = -1;
 				String title = input.nextLine();
 				for (int i = 0; i < this.model.size(); i++) 
 				{
@@ -68,6 +72,44 @@ public class Controller
 				this.view.show("Wrong input");
 				break;
 		}
+	}
+
+	private Cd createElement()
+	{
+		int number;
+		int count = 0;
+		String title = null;
+		String artist = null;
+		CdTrack[] track = null;
+		
+		System.out.println("please input cd title");
+		title = input.nextLine().toUpperCase();
+		System.out.println("please input cd artist");
+		artist = input.nextLine().toUpperCase();
+		System.out.println("please input number of tracks");
+		number = input.nextInt();
+		title = input.nextLine(); 
+		while(count <= number)
+		{
+			System.out.println("please input track title");
+			title = input.nextLine().toUpperCase();
+			System.out.println("please input track artist");
+			artist = input.nextLine().toUpperCase();
+			System.out.println("please input hour");
+			int hour = input.nextInt();
+			System.out.println("please input minuts");
+			int min = input.nextInt();
+			System.out.println("please input seconds");
+			int sec = input.nextInt();
+			Time time = new Time(hour, min, sec);
+			
+			track[count] = new CdTrack(title, artist, time);
+			
+		}
+		
+		Cd cd = new Cd(title, artist, track);
+
+		return cd;
 	}
 
 	
