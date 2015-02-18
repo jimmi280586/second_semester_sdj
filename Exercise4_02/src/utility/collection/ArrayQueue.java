@@ -38,11 +38,12 @@ public class ArrayQueue<T> implements QueueADT<T>
 		}
 		else
 		{
-		this.queue[this.rear] = elements;
+		
 			if(this.rear == this.queue.length && this.front != 0)
 			{
 				this.rear = 0;
 			}
+			this.queue[this.rear] = elements;
 			this.count ++;
 			this.rear ++;
 		}
@@ -55,10 +56,18 @@ public class ArrayQueue<T> implements QueueADT<T>
 		if(isEmpty() == true)
 		{
 			throw new IllegalStateException("queue is empty");
-			
-		}		
+		}	
+		else
+		{
+			if(this.front == this.queue.length && this.rear != 0)
+			{
+				this.front = 0;
+			}
+
+		}
 		T result = this.queue[this.front];
 		this.front ++;
+		this.count --;
 		return result;
 	}
 
@@ -72,36 +81,21 @@ public class ArrayQueue<T> implements QueueADT<T>
 				throw new IllegalStateException("queue is empty");
 				
 			}
-			
-		
-		
 		return this.queue[this.front];
 	}
 
 	@Override
 	   public int indexOf(T element)
 	   {
-	      if (element == null)
-	      {
-	         for (int i = front - 1; i >= 0; i--)
-	         {
-	            if (element == (queue[i]))
-	            {
-	               return front - 1 - i;
-	            }
-	         }
-
-	      }
-	      else
-	      {
-	         for (int i = front - 1; i >= 0; i--)
+	     
+	         for (int i = 0; i < queue.length; i++)
 	         {
 	            if (element.equals(queue[i]))
 	            {
-	               return front - 1 - i;
+	               return  i;
 	            }
 	         }
-	      }
+	      
 	      return -1;
 	   }
 
@@ -120,7 +114,12 @@ public class ArrayQueue<T> implements QueueADT<T>
 	
 	public String toString()
 	{
-		return this.queue.toString();
+		String result = "";
+		for (int i = front; i < count; i++) 
+		{
+			result += (queue[i] + " ");
+		}
+		return "[ " + result + "]" ;
 	}
 	
 	private void expandCapacity()
