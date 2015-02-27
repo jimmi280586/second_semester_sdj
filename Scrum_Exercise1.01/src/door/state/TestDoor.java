@@ -1,4 +1,5 @@
 package door.state;
+
 public class TestDoor {
     
     public TestDoor() {

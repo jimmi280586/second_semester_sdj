@@ -1,4 +1,5 @@
 package door.state;
+
 public class DoorOpening extends DoorState {
     
     public void click(Door door) {

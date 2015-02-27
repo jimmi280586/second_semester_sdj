@@ -1,5 +1,6 @@
 package door.state;
 
+
 public class Door implements DoorConstants {
 	
 	private DoorState state = CLOSED;

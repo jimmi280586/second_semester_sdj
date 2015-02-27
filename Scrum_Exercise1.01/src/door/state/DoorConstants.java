@@ -1,4 +1,5 @@
 package door.state;
+
 public interface DoorConstants {
     DoorState CLOSED = new DoorClosed();
     DoorState OPENING = new DoorOpening();

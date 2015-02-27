@@ -1,4 +1,5 @@
 package door.state;
+
 public abstract class DoorState implements DoorConstants {
     
     public abstract void click(Door door);
