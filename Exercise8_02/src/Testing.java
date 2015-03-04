@@ -24,7 +24,7 @@ public class Testing {
 		        Object[] row = results.get(i);
 		        String countryCode = row[0].toString();
 		        String country = row[1].toString();
-		        
+		       
 		      }
 
 		      sql = "SELECT StudyNumber, FirstName, LastName, "
@@ -41,7 +41,7 @@ public class Testing {
 		        String firstName = row[1].toString();
 		        String lastName = row[2].toString();
 		        String country = row[3].toString();
-		        String countryCode = contrycal(country);
+		        String countryCode = countrycal(country);
 		       
 		        Student st = new Student(studyNumber, firstName, lastName, countryCode, country);
 		        col.add(st);
@@ -58,7 +58,7 @@ public class Testing {
 		 System.out.println(col.toString());
 	}
 
-	private static String contrycal(String text) 
+	private static String countrycal(String text) 
 	{
 
 	      if(text.equals("Bulgaria")) return "BG";
