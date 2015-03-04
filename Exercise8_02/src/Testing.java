@@ -27,7 +27,7 @@ public class Testing {
 		       
 		      }
 
-		      sql = "SELECT StudyNumber, FirstName, LastName, "
+		      sql = "SELECT StudyNumber, FirstName, LastName,  "
 		          + "Country FROM Student, Nationality "
 		          + "WHERE Student.CountryCode = Nationality.CountryCode "
 		          + "AND FirstName LIKE ? " + "ORDER BY FirstName, LastName;";
