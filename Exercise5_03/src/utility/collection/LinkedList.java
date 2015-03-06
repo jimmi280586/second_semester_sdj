@@ -2,13 +2,13 @@ package utility.collection;
 
 import java.util.EmptyStackException;
 
-public class LinkedQueue<T> implements QueueADT<T>
+public class LinkedList<T> implements QueueADT<T>
 {
 	private int count;
 	private LinearNode<T> front;
 	private LinearNode<T> rear;
 
-	public LinkedQueue()
+	public LinkedList()
 	{
 		front = new LinearNode<T>(); // Dummy node
 		rear = front; // Make rear point to the dummy node

@@ -1,11 +1,11 @@
-package utility.collection;
 
-public class LinkedSet<T> implements SetADT<T> 
+
+public class LinkedList<T> implements ListADT<T>
 {
 	private int count;
 	private LinearNode<T> front;
 
-	public LinkedSet()
+	public LinkedList()
 	{
 		front = new LinearNode<T>(); // Dummy node
 		count = 0;
@@ -19,6 +19,20 @@ public class LinkedSet<T> implements SetADT<T>
 			current = current.getNext(); // cycle through nodes
 		}
 		return current;
+	}
+
+	@Override
+	public void add(int index, T element)
+	{
+		if (index < 0 || index > count)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+
+		LinearNode<T> previous = getNode(index - 1);
+		LinearNode<T> newNode = new LinearNode<T>(element, previous.getNext());
+		previous.setNext(newNode);
+		count++;
 	}
 
 	@Override
@@ -39,6 +53,42 @@ public class LinkedSet<T> implements SetADT<T>
 	}
 
 	@Override
+	public void set(int index, T element)
+	{
+		if(index < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		getNode(index).setElement(element);
+	}
+
+	@Override
+	public T get(int index)
+	{
+		if(index < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		return getNode(index).getElement();
+	}
+
+	@Override
+	public T remove(int index)
+	{
+		if(index < 0 || index >= count) // Account for bad arguments
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		LinearNode<T> previous = getNode(index - 1); // Get the node right before the one we want to delete
+		LinearNode<T> nodeToDelete = previous.getNext(); // Get the node we want to delete
+		previous.setNext(nodeToDelete.getNext()); // Set the previous node to point to the node after the one we want to delete
+		nodeToDelete.setNext(null); // Remove the deleted node's pointer
+
+		count--;
+		return nodeToDelete.getElement(); // Return the element at the deleted node
+	}
+
+	@Override
 	public T remove(T element)
 	{
 		T elementToRemove = null;
@@ -52,19 +102,10 @@ public class LinkedSet<T> implements SetADT<T>
 		return elementToRemove;
 	}
 
-	private T remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private int indexOf(T element) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
-	public boolean contains(T element)
+	public int indexOf(T element)
 	{
+		int index = 0; // Start index at 0
 		LinearNode<T> current = front; // Start with the first node
 		while (current.getNext() != null)
 		{
@@ -73,27 +114,34 @@ public class LinkedSet<T> implements SetADT<T>
 			{ // If looking for a null element
 				if (current.getElement() == null)
 				{ // If the current node has a null element
-					return true; // Then return the current index
+					return index; // Then return the current index
 				}
 			} else if (current.getElement() != null
 					&& current.getElement().equals(element))
 			{ // If the node has a matching element
-				return true; // Return the current index
+				return index; // Return the current index
 			}
+			index++;
 		}
-		return false; // If no match, return junk value
+		return -1; // If no match, return junk value
+	}
+
+	@Override
+	public boolean contains(T element)
+	{
+		return indexOf(element) != -1;
 	}
 
 	@Override
 	public boolean isEmpty()
 	{
-		return this.count == 0;
+		return count == 0;
 	}
 
 	@Override
 	public int size()
 	{
-		return this.count;
+		return count;
 	}
 
 	@Override
@@ -116,17 +164,4 @@ public class LinkedSet<T> implements SetADT<T>
 		return str;
 	}
 
-	@Override
-	public boolean isSubset(SetADT<T> set) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public SetADT<T> intersection(SetADT<T> set) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }
