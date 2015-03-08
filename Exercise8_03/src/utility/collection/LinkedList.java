@@ -2,172 +2,166 @@ package utility.collection;
 
 public class LinkedList<T> implements ListADT<T>
 {
-   private int count;
-   private LinearNode<T> front;
+	private int count;
+	private LinearNode<T> front;
 
-   public LinkedList()
-   {
-      count = 0;
-      front = null;
-   }
+	public LinkedList()
+	{
+		front = new LinearNode<T>(); // Dummy node
+		count = 0;
+	}
 
-   @Override
-   public void add(int index, T element)
-   {
-      if (index < 0 || index > count)
-      {
-         throw new IndexOutOfBoundsException();
-      }
-      if (index == 0)
-      {
-         front = new LinearNode<T>(element, front);
-      }
-      else
-      {
-         LinearNode<T> previous = getNode(index - 1);
-         LinearNode<T> newNode = new LinearNode<T>(element, previous.getNext());
-         previous.setNext(newNode);
-      }
-      count++;
-   }
+	public LinearNode<T> getNode(int index)
+	{
+		LinearNode<T> current = front; // Start at front node
+		for (int i = -1; i < index; i++)
+		{
+			current = current.getNext(); // cycle through nodes
+		}
+		return current;
+	}
 
-   private LinearNode<T> getNode(int index)
-   {
-      if (index >= count)
-      {
-         throw new IndexOutOfBoundsException();
-      }
-      if (index < 0)
-      {
-         return null;
-      }
-      LinearNode<T> current = front;
-      for (int i = 0; i < index; i++)
-      {
-         current = current.getNext();
-      }
-      return current;
-   }
+	@Override
+	public void add(int index, T element)
+	{
+		if (index < 0 || index > count)
+		{
+			throw new IndexOutOfBoundsException();
+		}
 
-   @Override
-   public void add(T element)
-   {
-      add(count, element);
-   }
+		LinearNode<T> previous = getNode(index - 1);
+		LinearNode<T> newNode = new LinearNode<T>(element, previous.getNext());
+		previous.setNext(newNode);
+		count++;
+	}
 
-   @Override
-   public void set(int index, T element)
-   {
-      if (index < 0 || index >= count)
-      {
-         throw new IndexOutOfBoundsException();
-      }
-      getNode(index).setElement(element);
-   }
+	@Override
+	public void add(T element)
+	{
+		LinearNode<T> current = front;
+		while (current.getNext() != null)
+		{
+			current = current.getNext();
+		}
+		current.setNext(new LinearNode<T>(element));
+		count++;
+		
+		/*
+		 * Can be one-lined:
+		 * add(count, element);
+		 */
+	}
 
-   @Override
-   public T get(int index)
-   {
-      if (index < 0 || index >= count)
-      {
-         throw new IndexOutOfBoundsException();
-      }
-      LinearNode<T> node = getNode(index);
-      return node.getElement();
-   }
+	@Override
+	public void set(int index, T element)
+	{
+		if(index < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		getNode(index).setElement(element);
+	}
 
-   @Override
-   public T remove(int index)
-   {
-      if (index < 0 || index >= count)
-      {
-         throw new IndexOutOfBoundsException();
-      }
-      T toRemove = null;
-      if (index == 0)
-      {
-         toRemove = front.getElement();
-         front = front.getNext();
-      }
-      else
-      {
-         LinearNode<T> previous = getNode(index - 1);
-         toRemove = previous.getNext().getElement();
-         previous.setNext(previous.getNext().getNext());
-      }
-      count--;
-      return toRemove;
-   }
+	@Override
+	public T get(int index)
+	{
+		if(index < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		return getNode(index).getElement();
+	}
 
-   @Override
-   public T remove(T element)
-   {
-      int index = indexOf(element);
-      if (index > -1)
-      {
-         return remove(index);
-      }
-      return null;
-   }
+	@Override
+	public T remove(int index)
+	{
+		if(index < 0 || index >= count) // Account for bad arguments
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		LinearNode<T> previous = getNode(index - 1); // Get the node right before the one we want to delete
+		LinearNode<T> nodeToDelete = previous.getNext(); // Get the node we want to delete
+		previous.setNext(nodeToDelete.getNext()); // Set the previous node to point to the node after the one we want to delete
+		nodeToDelete.setNext(null); // Remove the deleted node's pointer
 
-   @Override
-   public int indexOf(T element)
-   {
-      LinearNode<T> current = front;
-      if (element != null)
-      {
-         for (int i = 0; i < count; i++)
-         {
-            if (element.equals(current.getElement()))
-               return i;
-            current = current.getNext();
-         }
-      }
-      else
-      {
-         for (int i = 0; i < count; i++)
-         {
-            if (null == current.getElement())
-               return i;
-            current = current.getNext();
-         }
-      }
-      return -1;
-   }
+		count--;
+		return nodeToDelete.getElement(); // Return the element at the deleted node
+	}
 
-   @Override
-   public boolean contains(T element)
-   {
-      return indexOf(element) > -1;
-   }
+	@Override
+	public T remove(T element)
+	{
+		T elementToRemove = null;
+		int index = indexOf(element);
 
-   @Override
-   public boolean isEmpty()
-   {
-      return count == 0;
-   }
+		if (index > -1)
+		{
+			elementToRemove = remove(index);
+		}
 
-   @Override
-   public int size()
-   {
-      return count;
-   }
+		return elementToRemove;
+	}
 
-   public String toString()
-   {
-      String s = "{";
-      LinearNode<T> current = front;
+	@Override
+	public int indexOf(T element)
+	{
+		int index = 0; // Start index at 0
+		LinearNode<T> current = front; // Start with the first node
+		while (current.getNext() != null)
+		{
+			current = current.getNext(); // Move to the next node
+			if (element == null)
+			{ // If looking for a null element
+				if (current.getElement() == null)
+				{ // If the current node has a null element
+					return index; // Then return the current index
+				}
+			} else if (current.getElement() != null
+					&& current.getElement().equals(element))
+			{ // If the node has a matching element
+				return index; // Return the current index
+			}
+			index++;
+		}
+		return -1; // If no match, return junk value
+	}
 
-      for (int i = 0; i < count; i++)
-      {
-         s += current.getElement();
-         if (i < count - 1)
-         {
-            s += ", ";
-         }
-         current = current.getNext();
-      }
-      s += "}";
-      return s;
-   }
+	@Override
+	public boolean contains(T element)
+	{
+		return indexOf(element) != -1;
+	}
+
+	@Override
+	public boolean isEmpty()
+	{
+		return count == 0;
+	}
+
+	@Override
+	public int size()
+	{
+		return count;
+	}
+
+	@Override
+	public String toString()
+	{
+		String str = "";
+		LinearNode<T> current = front; // Start with the first node
+		while (current.getNext() != null)
+		{
+			current = current.getNext(); // Move off of the dummy node
+			if (current.getElement() == null)
+			{ // If current node has no element
+				str += "Empty"; // Report as empty
+			} else
+			{
+				str += current.getElement().toString(); // Otherwise, add element's toString to the string
+			}
+			str += "\n";
+		}
+		return str;
+	}
+
 }
