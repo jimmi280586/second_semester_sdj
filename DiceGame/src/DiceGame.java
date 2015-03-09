@@ -38,7 +38,7 @@ public class DiceGame
 	         
 	         if(p1==60)
 	         {
-	            System.out.println("Player I has won!");
+	            System.out.println(player1 + " has won!");
 	            break;
 	         }
 	         if(p1<60)
@@ -46,13 +46,13 @@ public class DiceGame
 	            dice1 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            dice2 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            p1 = p1+roll(dice1, dice2);
-	            System.out.println("Player I has rolled: " + dice1 + " " + dice2);
-	            System.out.println("Player I: " + p1);
+	            System.out.println(player1 + " has rolled: " + dice1 + " " + dice2);
+	            System.out.println(player1 + ": " + p1);
 	         }
 	                  
 	         if(p2==60)
 	         {
-	            System.out.println("Player II has won!");
+	            System.out.println(player2 + " has won!");
 	            break;
 	         }
 	         if(p2<60)
@@ -60,8 +60,8 @@ public class DiceGame
 	            dice1 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            dice2 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            p2 = p2 + roll(dice1, dice2);
-	            System.out.println("Player II has rolled: " + dice1 + " " + dice2);
-	            System.out.println("Player II: " + p2);
+	            System.out.println(player2 + " has rolled: " + dice1 + " " + dice2);
+	            System.out.println(player2 + ": " + p2);
 	         }
 	         if(p1>60 && p2>60)
 	         {
@@ -71,6 +71,7 @@ public class DiceGame
 	            if(next.equalsIgnoreCase("yes"))
 	            {
 	            	more.interesting(goaul, player1, player2);
+	            	break;
 	            }
 	          
 	            	System.out.println("Game Over thanks for playing");
