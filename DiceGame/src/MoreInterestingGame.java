@@ -17,63 +17,63 @@ public class MoreInterestingGame
 	
 	public MoreInterestingGame()
 	{
-		this.NUMBER_OF_SIDES = 24;
-		this.p1 = 0;
-		this.p2 = 0;
-		this.turn = 1;
-		this.rand = new Random();		
+				
 	}
 	
-	public void interesting(int goaul1, String player1, String player2)
+	public void interesting(int goaul1, String player1, String player2, int sides, int p1, int p2, int turn)
 	   {  
 			int goaul = goaul1 * 10;
 			this.player1 = player1;
 			this.player2 = player2;
-			boolean b = true;
+			this.NUMBER_OF_SIDES = sides + 6;
+			this.p1 = p1;
+			this.p2 = p2;
+			this.turn = turn;
+			this.rand = new Random();
 			
-	      Scanner kb = new Scanner(System.in);
-	      System.out.println("Game continues with sides of dice = 24 and goaul = " + goaul);
+			Scanner kb = new Scanner(System.in);
+			System.out.println("Game continues with sides of dice = 24 and goaul = " + goaul);
 	      
-	      while(b == true)
+	      while(true)
 	      {
 	         System.out.println("Turn " + this.turn);
 	         
 	         
-	         if(p1==goaul)
+	         if(this.p1==goaul)
 	         {
 	            System.out.println(player1 + " has won!");
 	            break;
 	         }
-	         if(p1<goaul)
+	         if(this.p1<goaul)
 	         {
 	            dice1 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            dice2 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
-	            p1 = p1+roll(dice1, dice2);
+	            this.p1 = this.p1+roll(dice1, dice2);
 	            System.out.println(player1 + " has rolled: " + dice1 + " " + dice2);
-	            System.out.println(player1 + ": " + p1);
+	            System.out.println(player1 + ": " + this.p1);
 	         }
 	                  
-	         if(p2==goaul)
+	         if(this.p2==goaul)
 	         {
 	            System.out.println(player2 + " has won!");
 	            break;
 	         }
-	         if(p2<goaul)
+	         if(this.p2<goaul)
 	         {
 	            dice1 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
 	            dice2 = rand.nextInt(NUMBER_OF_SIDES-1 + 1) + 1;
-	            p2 = p2 + roll(dice1, dice2);
+	            this.p2 = this.p2 + roll(dice1, dice2);
 	            System.out.println(player2 + " has rolled: " + dice1 + " " + dice2);
-	            System.out.println(player2 + ": " + p2);
+	            System.out.println(player2 + ": " + this.p2);
 	         }
-	         if(p1>goaul && p2>goaul)
+	         if(this.p1>goaul && this.p2>goaul)
 	         {
 	            System.out.println("Draw");
 	            System.out.println("Do you want to continue the game type yes or no");
 	            String next = kb.nextLine();
 	            if(next.equalsIgnoreCase("yes"))
 	            {
-	            	interesting(goaul, player1, player2);
+	            	interesting(goaul, player1, player2, NUMBER_OF_SIDES, this.p1, this.p2, this.turn);
 	            	break;
 	            }
 	            
@@ -82,7 +82,7 @@ public class MoreInterestingGame
 	            
 	            
 	         }
-	         turn++;
+	         this.turn++;
 	      }
 	      
 	   }
