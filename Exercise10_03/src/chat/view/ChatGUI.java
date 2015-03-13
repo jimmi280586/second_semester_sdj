@@ -2,22 +2,19 @@ package chat.view;
 
 import java.awt.*;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.*;
 
 import chat.controller.ChatController;
 
-public class ChatGUI extends JFrame implements ChatView
-{
+public class ChatGUI extends JFrame implements ChatView {
   private JButton[] buttons;
   private JTextField textField;
   private JTextArea textArea;
   private ChatController controller;
   private ChatGUIHandler listener;
 
-  public ChatGUI()
-  {
+  public ChatGUI() {
     super("Chat");
 
     buttons = new JButton[5];
@@ -27,12 +24,10 @@ public class ChatGUI extends JFrame implements ChatView
   }
 
   @Override
-  public void start(ChatController controller)
-  {
+  public void start(ChatController controller) {
     this.controller = controller;
     this.listener = new ChatGUIHandler(this.controller, this);
-    for (int i = 0; i < buttons.length; i++)
-    {
+    for (int i = 0; i < buttons.length; i++) {
       if (buttons[i] != null)
         buttons[i].addActionListener(listener);
     }
@@ -41,10 +36,8 @@ public class ChatGUI extends JFrame implements ChatView
   }
 
   @Override
-  public void show(String message)
-  {
-    if (message.length() <= 0)
-    {
+  public void show(String message) {
+    if (message.length() <= 0) {
       return;
     }
     String all = message + "\n" + getLines(20);
@@ -53,20 +46,23 @@ public class ChatGUI extends JFrame implements ChatView
   }
 
   @Override
-  public String getMessage()
-  {
+  public String getMessage() {
     String what = textField.getText();
     textField.setText("");
     return what;
   }
 
-  private String getLines(int size)
-  {
+  @Override
+  public void update(Observable arg0, Object arg1) {
+    this.show(arg1.toString());
+
+  }
+
+  private String getLines(int size) {
     String all = "";
     String[] split = textArea.getText().split("\n");
     size = Math.min(size, split.length);
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
       all += split[i];
       if (i < size - 1)
         all += "\n";
@@ -74,8 +70,7 @@ public class ChatGUI extends JFrame implements ChatView
     return all;
   }
 
-  private void createComponents()
-  {
+  private void createComponents() {
     buttons[0] = new JButton("Send");
     buttons[1] = new JButton("Quit");
     textArea = new JTextArea();
@@ -83,18 +78,15 @@ public class ChatGUI extends JFrame implements ChatView
     textField = new JTextField();
   }
 
-  private void initializeComponents()
-  {
+  private void initializeComponents() {
     setSize(700, 450); // set frame size
     setLocationRelativeTo(null); // center of the screen
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
-  private void addComponentsToFrame()
-  {
+  private void addComponentsToFrame() {
     JPanel panelButtons = new JPanel();
-    for (int i = 0; i < buttons.length; i++)
-    {
+    for (int i = 0; i < buttons.length; i++) {
       if (buttons[i] != null)
         panelButtons.add(buttons[i]);
     }
@@ -104,12 +96,5 @@ public class ChatGUI extends JFrame implements ChatView
     add(panelButtons, BorderLayout.SOUTH);
     add(textField, BorderLayout.NORTH);
   }
-
-@Override
-public void update(Observable o, Object arg) 
-{
-	// TODO Auto-generated method stub
-	
-}
 
 }

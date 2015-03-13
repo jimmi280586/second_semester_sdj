@@ -1,91 +1,78 @@
 import java.util.Observable;
 import java.util.Observer;
 
-
-public class BusPassenger implements Observer
-{
+public class BusPassenger implements Observer {
   private String name;
   private Bus bus;
   private boolean newPassenger;
 
-  public BusPassenger(String name)
-  {
+  public BusPassenger(String name) {
     this.name = name;
-    this.bus = bus.getInstance();
+    this.bus = null;
     this.newPassenger = false;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public boolean isNewPassenger()
-  {
+  public boolean isNewPassenger() {
     return newPassenger;
   }
 
-  public Bus getBus()
-  {
+  public Bus getBus() {
     return bus;
   }
 
-  public void getIn(Bus bus)
-  {
-    if (this.bus != null)
+  public void getIn() {
+    if (this.bus != null) {
       getOut();
+    }
 
-    this.bus = bus;
+    this.bus = Bus.getInstance();
     newPassenger = true;
     bus.passengerGettingIn(this);
   }
 
-  public void getOut()
-  {
+  public void getOut() {
     newPassenger = false;
     bus.passengerGettingOut(this);
     bus = null;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return name;
   }
 
-  public boolean equals(Object obj)
-  {
-    if (!(obj instanceof BusPassenger))
+  public boolean equals(Object obj) {
+    if (!(obj instanceof BusPassenger)) {
       return false;
+    }
     BusPassenger p = (BusPassenger) obj;
-    return name.equals(p.name)
-        && ((bus == null & p.bus == null) || bus.equals(p.bus))
+    return name.equals(p.name) && ((bus == null & p.bus == null) || bus.equals(p.bus))
         && newPassenger == p.newPassenger;
   }
 
-  public void showMessage(String message)
-  {
+  public void showMessage(String message) {
     String reply = "";
     String[] split = message.split(":");
-    if (split.length != 2)
-    {
+    if (split.length != 2) {
       reply = "I don't understand";
-    }
-    else
-    {
-      if (split[0].equalsIgnoreCase("Enter"))
+    } else {
+      if (split[0].equalsIgnoreCase("Enter")) {
         reply = "Hello ";
-      else
+      } else {
         reply = "Bye Bye ";
+      }
       reply += split[1];
     }
     System.out.println(name + "> " + reply);
   }
 
-@Override
-public void update(Observable arg0, Object arg1) 
-{
-	// TODO Auto-generated method stub
-	
-}
-}
+  @Override
+  public void update(Observable observable, Object arg) {
 
+    showMessage((String) arg);
+
+  }
+}

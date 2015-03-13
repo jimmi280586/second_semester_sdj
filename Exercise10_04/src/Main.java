@@ -10,7 +10,7 @@ public class Main
 	{
 		try
 		{
-			CdModel model = new CdModelManager();
+			CdModelManager model = new CdModelManager();
 			CdView view = new CdGUI();
 			CdController controller = new CdController(model, view);
 

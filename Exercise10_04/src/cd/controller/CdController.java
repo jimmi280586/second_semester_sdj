@@ -1,6 +1,7 @@
 package cd.controller;
 
 import cd.domain.mediator.CdModel;
+import cd.domain.mediator.CdModelManager;
 import cd.domain.model.Cd;
 import cd.domain.model.CdList;
 import cd.view.CdView;
@@ -10,10 +11,11 @@ public class CdController
 	private CdModel model;
 	private CdView view;
 
-	public CdController(CdModel model, CdView view)
+	public CdController(CdModelManager model, CdView view) // Violates polymorphism, but it's in the chart...
 	{
 		this.model = model;
 		this.view = view;
+		model.addObserver(view);
 	}
 
 	public void execute(String what)
@@ -40,7 +42,7 @@ public class CdController
 			{
 				msg = "No CD with title: \"" + input + "\" found";
 			}
-			this.view.show(msg);
+			//this.view.show(msg);
 			break;
 		case "Search":
 			String searchInput = this.view.get("title");
@@ -57,7 +59,7 @@ public class CdController
 			{
 				searchMsg = "No CD with title: \"" + searchInput + "\" found";
 			}
-			this.view.show(searchMsg);
+			//this.view.show(searchMsg);
 			break;
 		case "Quit":
 			System.out.println("Quit");
