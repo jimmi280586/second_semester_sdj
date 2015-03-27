@@ -23,4 +23,5 @@ public class ServerModelManager extends Observable
 		list.add(pl);
 		
 	}
+	
 }
