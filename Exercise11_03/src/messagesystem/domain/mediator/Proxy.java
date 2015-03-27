@@ -11,7 +11,7 @@ import messagesystem.domain.model.AbstractMessage;
 public class Proxy implements ModelInterface
 
 {
-	private final int PORT = 4302;
+	private final int PORT = 2112;
 	private final String HOST = "localhost";
 	
 	private Socket clientSocket;
@@ -60,6 +60,12 @@ public class Proxy implements ModelInterface
 		{
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void add(String from, String message) {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -37,6 +37,7 @@ public class ServerCommunicationThread extends Thread implements Observer
       this.start();
    }
 
+   @Override
    public void run()
    {
       try
@@ -101,7 +102,7 @@ public class ServerCommunicationThread extends Thread implements Observer
       }
    }
 
-   @Override
+  @Override
    public void update(Observable arg0, Object arg1)
    {
       try
