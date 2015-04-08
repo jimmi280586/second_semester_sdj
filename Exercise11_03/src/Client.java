@@ -1,26 +1,17 @@
+import java.io.IOException;
+
+import chat.controller.ClientController;
+import chat.domain.mediator.ClientModelManager;
+import chat.domain.view.ClientView;
 
 
-import messagesystem.controler.ClientController;
-import messagesystem.domain.mediator.ClientModelManager;
-import messagesystem.view.ClientView;
-
-public class Client 
+public class Client
 {
-
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
-		try {
-			ClientModelManager model = new ClientModelManager();
-			ClientView view = new ClientView();
-			view.setVisible(true);
-			ClientController controller = new ClientController(model, view);
-			
-			view.start(controller);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-
+		ClientModelManager manager = new ClientModelManager();
+		ClientView view = new ClientView();
+		ClientController control = new ClientController(manager, view);
+		view.start(control);
 	}
-
 }

@@ -1,6 +1,6 @@
-import messagesystem.controler.ServerController;
-import messagesystem.domain.mediator.ServerModelManager;
-import messagesystem.view.ServerView;
+import chat.controller.ServerController;
+import chat.domain.mediator.ServerModelManager;
+import chat.domain.view.ServerView;
 
 
 public class Server
@@ -8,17 +8,11 @@ public class Server
 
 	public static void main(String[] args)
 	{
-		try {
-			ServerModelManager model = new ServerModelManager();
+		{
+			ServerModelManager manager = new ServerModelManager();
 			ServerView view = new ServerView();
-			view.setVisible(true);
-			ServerController controller = new ServerController(model, view);
-			
-			view.start(controller);
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
+			ServerController control = new ServerController(manager, view);
+			view.start(control);
 		}
 
 	}
