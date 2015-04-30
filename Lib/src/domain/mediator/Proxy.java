@@ -1,4 +1,4 @@
-package chat.domain.mediator;
+package domain.mediator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import chat.domain.model.PublicMessage;
 
 public class Proxy implements ModelInterface
 {
-	private static int PORT = 3333;
+	private static int PORT = 901;
 	private static String HOST = "localhost";
 
 	private Socket clientSocket;

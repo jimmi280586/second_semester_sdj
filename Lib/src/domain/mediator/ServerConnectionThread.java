@@ -1,4 +1,4 @@
-package chat.domain.mediator;
+package domain.mediator;
 
 import java.io.IOException;
 import java.net.*;
@@ -6,7 +6,7 @@ import java.net.*;
 public class ServerConnectionThread
 {
 	// synchronizes information so the that there is order, 
-	private static int PORT = 3333;
+	private static int PORT = 2201;
 	private ServerModelManager model;
 	
 	public ServerConnectionThread(ServerModelManager model)

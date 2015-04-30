@@ -1,4 +1,4 @@
-package chat.domain.mediator;
+package domain.mediator;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -13,8 +13,7 @@ public class ClientModelManager extends Observable implements ModelInterface // 
 {
 	// delegates work to the proxy
 	private Proxy prx;
-	
-	
+
 	   public ClientModelManager() throws UnknownHostException, IOException
 	   {
 	      this.prx = new Proxy(this);
