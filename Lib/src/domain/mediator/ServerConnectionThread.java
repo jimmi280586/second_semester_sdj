@@ -1,43 +1,51 @@
 package domain.mediator;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Socket;
 
-import java.io.IOException;
-import java.net.*;
+import domain.controller.ServerController;
 
-public class ServerConnectionThread
+
+public class ServerConnectionThread implements Runnable
 {
-	// synchronizes information so the that there is order, 
-	private static int PORT = 2201;
-	private ServerModelManager model;
 	
-	public ServerConnectionThread(ServerModelManager model)
-	{
-		this.model = model;
-	}
-	
-	public void run() throws IOException
-	{
+		Socket clientSocket=null;
+		BufferedReader brBufferedReader = null;
+		ServerController con;
 		
-	
-	System.out.println("starting server...");
-	
-	// Creating a welcome socket port 901
-	
-	ServerSocket welcomeSocket = new ServerSocket(PORT); 
-	
-	while(true)
-	{
-		// Wait, on welcoming socket for contact by client
-		System.out.println("Waiting for a client....");
-		Socket connectionSocket = welcomeSocket.accept();
-		
-		// Start a thread with the client communication
-		ServerCommunicationThread c = new ServerCommunicationThread(connectionSocket, model);
-		
-		
-	}
-	}
-	
+		public ServerConnectionThread(Socket clientSocket)
+		{
+			this.clientSocket = clientSocket;
+		}
 
+		public void run()
+		{
+			try
+			{
+				brBufferedReader = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));		
+			
+			String messageString;
+			while(true)
+			{
+			while((messageString = brBufferedReader.readLine())!= null)
+			{
+				
+				if(messageString.equalsIgnoreCase("EXIT"))
+				{
+					break;
+				}
+				System.out.println("From Client: " + messageString);
+				con.setMessage(messageString);
+			}
+			this.clientSocket.close();
+			System.exit(0);
+		}
+			
+		}
+		catch(Exception ex)
+			{
+				System.out.println(ex.getMessage());
+			}
+		}
 	
-
 }

@@ -1,8 +1,6 @@
-import domain.controller.ServerController;
-import domain.mediator.ServerModelManager;
-import domain.view.ServerView;
-
-
+import chat.controller.ServerController;
+import chat.domain.mediator.ServerModelManager;
+import chat.domain.view.ServerView;
 
 
 public class Server

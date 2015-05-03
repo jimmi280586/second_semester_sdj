@@ -1,23 +1,31 @@
 package domain.mediator;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-import java.util.ArrayList;
-import java.util.Observable;
 
-import chat.domain.model.AbstractMessage;
-import chat.domain.model.MessageList;
-// is the observable class for the servermodel manager
-public class ServerModelManager extends Observable
+public class ServerModelManager 
 {
-	private MessageList messages;
+	String message;
+
 	
-	public ServerModelManager()
-	{
-		messages = new MessageList();
-	}
-	
-	
-	public void add(AbstractMessage message)
-	{
-		messages.add(message);
-	}
+		public void RunServer() throws IOException 
+		{
+			final int port = 901;
+			System.out.println("Server waiting for connection on port " + port);
+			ServerSocket ss = new ServerSocket(port);
+			Socket clientSocket = ss.accept();
+			System.out.println("Recieved connection from " + clientSocket.getInetAddress() + " on port " + clientSocket.getPort());
+			//create two threads to send and recieve from client
+			ServerConnectionThread recieve = new ServerConnectionThread(clientSocket);
+			Thread thread = new Thread(recieve);
+			thread.start();
+			ServerCommunicationThread send = new ServerCommunicationThread(clientSocket, this.message);
+			Thread thread2 = new Thread(send);
+			thread2.start();
+		}
+		public void setMessage(String msg)
+		{
+			this.message = msg;
+		}
 }

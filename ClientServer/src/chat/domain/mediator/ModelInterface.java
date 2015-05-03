@@ -1,4 +1,4 @@
-package domain.mediator;
+package chat.domain.mediator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

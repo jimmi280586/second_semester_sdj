@@ -1,40 +1,39 @@
 package domain.mediator;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
+
+import java.net.Socket;
 import java.util.Observable;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
-import chat.domain.model.AbstractMessage;
 
-public class ClientModelManager extends Observable implements ModelInterface // Is the observable
+public class ClientModelManager extends Observable 
 {
-	// delegates work to the proxy
-	private Proxy prx;
-
-	   public ClientModelManager() throws UnknownHostException, IOException
-	   {
-	      this.prx = new Proxy(this);
-	   }
-
-	   public void logout() throws TransformerException,
-	         ParserConfigurationException
-	   {
-	      prx.logout();
-	   }
-
-	   public void update(AbstractMessage message)
-	   {
-	      super.setChanged();
-	      super.notifyObservers(message);
-	   }
-
-	   @Override
-	   public void add(AbstractMessage message) throws TransformerException,
-	         ParserConfigurationException
-	   {
-	      prx.add(message);
-	   }
+	private String what;
+	private String title;
+	private String type;
+	
+	public ClientModelManager(String what, String title, String type)
+	{
+		this.title = title;
+		this.type = type;
+		this.what = what;
+	}
+	public ClientModelManager()
+	{
+		try {
+			Socket sock = new Socket("localhost",901);
+			ClientCommunicationThread sendThread = new ClientCommunicationThread(sock, what, title, type);
+			Thread thread = new Thread(sendThread);
+			thread.start();
+			ClientReceiverThread recieveThread = new ClientReceiverThread(sock);
+			Thread thread2 = new Thread(recieveThread);
+			thread2.start();
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.getMessage());
+		} 
+		
+	}
+	
 }

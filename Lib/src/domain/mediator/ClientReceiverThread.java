@@ -1,67 +1,39 @@
 package domain.mediator;
 
+
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
 
-import javax.annotation.processing.Messager;
-import javax.xml.parsers.ParserConfigurationException;
-
-import  org.xml.sax.SAXException;
-
-import chat.domain.model.AbstractMessage;
-import chat.domain.model.MessageList;
-
-public class ClientReceiverThread extends Thread
+public class ClientReceiverThread implements Runnable
 {
-	// synchronizes information so the that there is order, 
-	private BufferedReader inFromServer;
-	private ClientModelManager model;
-	private MessageList reader;
-	private int id;
+	Socket sock = null;
+	BufferedReader recieve = null;
 	
-	public ClientReceiverThread(ClientModelManager model, BufferedReader inFromServer)
+	public ClientReceiverThread(Socket sock) 
 	{
-		this.inFromServer = inFromServer;
-		this.model = model;
-		reader = new MessageList();
-		this.id = 0;
+		this.sock = sock;
 	}
-	
-	@Override
+
 	public void run()
 	{
-		while(true)
+		try
 		{
-			String xmlString = "";
-
-	         while (true)
-	         {
-	            try
-	            {
-	               String line = inFromServer.readLine();
-	               xmlString += line;
-
-	               if (line.toLowerCase().endsWith("</message>"))
-	                  break;
-	            }
-	            catch (IOException e)
-	            {
-	               e.printStackTrace();
-	            }
-	         }
-
-	         AbstractMessage msg = new AbstractMessage(id, " client ", xmlString) {
-				
-			};
-			
-			model.update(msg);
-			id++;
-
-	      }
-	   }
-
-		
+			recieve = new BufferedReader(new InputStreamReader(this.sock.getInputStream()));
+			String msgRecieved = null;
+		while((msgRecieved = recieve.readLine())!= null)
+		{
+			System.out.println("From Server: " + msgRecieved);
+			System.out.println("information given to customer");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
+}
+	
 	
 	
 

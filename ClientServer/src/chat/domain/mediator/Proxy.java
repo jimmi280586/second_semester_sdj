@@ -1,4 +1,4 @@
-package domain.mediator;
+package chat.domain.mediator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.annotation.processing.Messager;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -16,7 +15,7 @@ import chat.domain.model.PublicMessage;
 
 public class Proxy implements ModelInterface
 {
-	private static int PORT = 901;
+	private static int PORT = 2112;
 	private static String HOST = "localhost";
 
 	private Socket clientSocket;
@@ -33,7 +32,7 @@ public class Proxy implements ModelInterface
 		inFromServer = new BufferedReader(new InputStreamReader(
 				clientSocket.getInputStream()));
 
-		ClientReceiverThread receiver = new ClientReceiverThread(
+		ClientReceiverThread receiver = new ClientReceiverThread(inFromServer,
 				model, inFromServer);
 
 		receiver.start();
@@ -43,24 +42,28 @@ public class Proxy implements ModelInterface
 	public void login() throws ParserConfigurationException,
 			TransformerException
 	{
-		PublicMessage pmsg = new PublicMessage(0, "jimmi", "login");
-		
-		outToServer.println(pmsg + "false");
+		PublicMessage pmsg = new PublicMessage(0, "Alice", "login");
+		MessageXmlWriter writer = new MessageXmlWriter();
+		String msgXml = writer.toXml(pmsg, false);
+		outToServer.println(msgXml);
 	}
 
 	public void logout() throws TransformerException,
 			ParserConfigurationException
 	{
-		PublicMessage pmsg = new PublicMessage(0, "jimmi", "logout");
-		
-		outToServer.println(pmsg + "false");
+		PublicMessage pmsg = new PublicMessage(0, "Alice", "logout");
+		MessageXmlWriter writer = new MessageXmlWriter();
+		String msgXml = writer.toXml(pmsg, false);
+		outToServer.println(msgXml);
 	}
 
 	public void add(AbstractMessage message) throws TransformerException,
 			ParserConfigurationException
 	{
-		
-		outToServer.println(message + "false");
+		MessageXmlWriter writer = new MessageXmlWriter();
+		String msgXml = writer.toXml(message, false);
+		writer.toXml(message, "mulishani?");
+		outToServer.println(msgXml);
 	}
 
 }

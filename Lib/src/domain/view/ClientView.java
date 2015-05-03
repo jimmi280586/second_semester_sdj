@@ -1,132 +1,124 @@
 package domain.view;
+import java.util.Scanner;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import chat.domain.model.AbstractMessage;
 import domain.controller.ClientController;
 
-public class ClientView extends JFrame implements ActionListener, Observer
+
+public class ClientView 
 {
-	private JTextField textFieldInput;
-	   private JTextArea textAreaOutput;
-	   private JButton buttonSend;
-	   private JButton buttonQuit;
-	   private ClientController controller;
+	ClientController controller;
+	Scanner in = new Scanner(System.in);
+	public void ClientMenu()
+	{
+		
+			System.out.println("Welcome to the Fairytale library system!"
+					+ "\n What do you want to do next?"
+					+ "\n 1) Lend an item"
+					+ "\n 2) Return an item"
+					+ "\n 3) Add a new item"
+					+ "\n 4) Search item"
+					+ "\n 5) Reserve item"
+					+ "\n 6) quit program");  
+			
+			int choice = in.nextInt(); 
+			in.nextLine();
+			String title, type1;
+			int type2;
+			switch(choice)
+			{
+			case 1: 
+				System.out.println("enter title of item");
+				title = in.nextLine();
+				System.out.println("enter item`s type Book, Cd, Dvd, Article");
+				type1 = in.nextLine();
+				type2 = type(type1);
+				try {
+					controller.execute("lend", title, type2);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+			case 2: 
+				System.out.println("enter title of item");
+				title = in.nextLine();
+				System.out.println("enter item`s type Book, Cd, Dvd, Article");
+				type1 = in.nextLine();
+				type2 = type(type1);
+				try {
+					controller.execute("return", title, type2);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+			case 3:				
+				System.out.println("enter item`s type Book, Cd, Dvd, Article");
+				type1 = in.nextLine();
+				type2 = type(type1);
+				try {
+					controller.execute("add", null, type2);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break; 
+			case 4: 
+				System.out.println("enter title of item");
+				title = in.nextLine();
+				System.out.println("enter item`s type Book, Cd, Dvd, Article");
+				type1 = in.nextLine();
+				type2 = type(type1);
+				try {
+					controller.execute("search", title, type2);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+			case 5: 
+				System.out.println("enter title of item");
+				title = in.nextLine();
+				System.out.println("enter item`s type Book, Cd, Dvd, Article");
+				type1 = in.nextLine();
+				type2 = type(type1);
+				try {
+					controller.execute("reserve", title, type2);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+			case 6: 
+				try {
+					controller.execute("quit", null, 0);
+				} catch (TransformerException | ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					break;
+			}
+		}
 
-	   public ClientView()
-	   {
-	      super("Client View");
-
-	      initialize();
-	      addComponentsToFrame();
-	   }
-
-	   public void start(ClientController controller)
+	private int type(String type)
+	{
+		if(type.equalsIgnoreCase("book"))
+			return 1;
+		else if(type.equalsIgnoreCase("cd"))
+			return 2;
+		else if(type.equalsIgnoreCase("dvd"))
+			return 3;
+		else if(type.equalsIgnoreCase("article"))
+			return 4;
+		else return -1;
+	}
+	
+	 public void start(ClientController controller)
 	   {
 	      this.controller = controller;
-	      buttonSend.addActionListener(this);
-	      buttonQuit.addActionListener(this);
-	      textFieldInput.addActionListener(this);
-	      setVisible(true);
-	   }
-
-	   public String getAndRemoveInput()
-	   {
-	      String txt = textFieldInput.getText();
-	      textFieldInput.setText("");
-	      return txt;
-	   }
-	   public String getNickName()
-	   {
-	      return JOptionPane.showInputDialog("Nickname?");
-	   }
-
-	   private void initialize()
-	   {
-	      textFieldInput = new JTextField();
-	      textAreaOutput = new JTextArea();
-	      textAreaOutput.setEditable(false);
-	      textAreaOutput.setBackground(Color.LIGHT_GRAY);
-	      buttonSend = new JButton("Send");
-	      buttonQuit = new JButton("Quit");
-	      setSize(400, 500); // set frame size
-	      setLocationRelativeTo(null); // center of the screen
-	      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	   }
-
-	   private void addComponentsToFrame()
-	   {
-	      JPanel panelButtons = new JPanel();
-	      panelButtons.add(buttonSend);
-	      panelButtons.add(buttonQuit);
-
-	      JPanel panel1 = new JPanel(new BorderLayout());
-	      panel1.add(textFieldInput, BorderLayout.CENTER);
-	      panel1.add(panelButtons, BorderLayout.EAST);
-
-	      JScrollPane scrollPane = new JScrollPane(textAreaOutput);
-
-	      JPanel contentPane = new JPanel(new BorderLayout());
-	      contentPane.add(panel1, BorderLayout.NORTH);
-	      contentPane.add(scrollPane, BorderLayout.CENTER);
-
-	      setContentPane(contentPane);
-	   }
-
-	   @Override
-	   public void actionPerformed(ActionEvent e)
-	   {
-	      if ((e.getSource() instanceof JTextField))
-	      {
-	         try
-			{
-				controller.execute("Send");
-			} catch (TransformerException | ParserConfigurationException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	      }
-	      else
-	      {
-	         try
-			{
-				controller.execute(((JButton) (e.getSource())).getText());
-			} catch (TransformerException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ParserConfigurationException e1)
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	      }
-	   }
-
-	   @Override
-	   public void update(Observable o, Object arg)
-	   {
-	      String old = textAreaOutput.getText();
-	      if (old.length() > 1)
-	         old = "\n" + old;
-	      AbstractMessage msg = (AbstractMessage) arg;
-	      textAreaOutput.setText(msg.getFrom() + " >" + msg.getBody() + old);
-	      textAreaOutput.setCaretPosition(0);
+	      ClientMenu();
 	   }
 }

@@ -12,7 +12,8 @@ import domain.model.ListADT;
 
 public class HardCodeMethods
 {
-public static void hardCodedList() 
+	private int size;
+	public static ArrayList<Item> hardCodedList() 
 		
 	
 	{
@@ -67,5 +68,7 @@ public static void hardCodedList()
 			Item s1 = al.get(i1);
 			System.out.println("" + s1.toString());
 		}
+		return al;
 	}
+	
 }
