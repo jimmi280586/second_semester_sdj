@@ -20,13 +20,27 @@ public class ClientController
 		
 	}
 	
-	public void execute(String what, String command, int type) throws TransformerException, ParserConfigurationException
+	public void execute(int choice, String what, String command, int type) throws TransformerException, ParserConfigurationException
 	{
-		switch (what)
+		String t = "" + type;
+		switch (choice)
 		{
-		case "Send":
-       
-         case "Quit":
+		case 1:
+			model = new ClientModelManager(what, command, t);
+			break;
+		case 2:
+			model = new ClientModelManager(what, command, t);
+			break;
+		case 3:
+			model = new ClientModelManager(what, command, t);
+			break;
+		case 4:
+			model = new ClientModelManager(what, command, t);
+			break;
+		case 5:	
+			model = new ClientModelManager(what, command, t);
+			break;
+         case 6:
             System.exit(0);
 		}
 	}

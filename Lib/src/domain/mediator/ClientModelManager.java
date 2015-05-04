@@ -21,7 +21,7 @@ public class ClientModelManager extends Observable
 	public ClientModelManager()
 	{
 		try {
-			Socket sock = new Socket("localhost",901);
+			Socket sock = new Socket("localhost", 6789);
 			ClientCommunicationThread sendThread = new ClientCommunicationThread(sock, what, title, type);
 			Thread thread = new Thread(sendThread);
 			thread.start();

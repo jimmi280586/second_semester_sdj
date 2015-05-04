@@ -36,7 +36,7 @@ public class ClientView
 				type1 = in.nextLine();
 				type2 = type(type1);
 				try {
-					controller.execute("lend", title, type2);
+					controller.execute(choice, "lend", title, type2);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class ClientView
 				type1 = in.nextLine();
 				type2 = type(type1);
 				try {
-					controller.execute("return", title, type2);
+					controller.execute(choice, "return", title, type2);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -60,7 +60,7 @@ public class ClientView
 				type1 = in.nextLine();
 				type2 = type(type1);
 				try {
-					controller.execute("add", null, type2);
+					controller.execute(choice, "add", null, type2);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -73,7 +73,7 @@ public class ClientView
 				type1 = in.nextLine();
 				type2 = type(type1);
 				try {
-					controller.execute("search", title, type2);
+					controller.execute(choice, "search", title, type2);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -86,7 +86,7 @@ public class ClientView
 				type1 = in.nextLine();
 				type2 = type(type1);
 				try {
-					controller.execute("reserve", title, type2);
+					controller.execute(choice, "reserve", title, type2);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -94,7 +94,7 @@ public class ClientView
 					break;
 			case 6: 
 				try {
-					controller.execute("quit", null, 0);
+					controller.execute(choice, "quit", null, 0);
 				} catch (TransformerException | ParserConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
